@@ -49,6 +49,8 @@ warnings.filterwarnings(action = 'ignore')
 #%tensorboard --logdir logs
 
 
+##################### Training data ############################################################
+
 #Reading the data
 df2 = pd.read_csv('../input/big-dataset-btp/train_total.csv')
 
@@ -197,6 +199,7 @@ seq2seq_Model.summary()
 
 
 
+##################### Validation data ############################################################
 
 
 dataset3 = pd.read_csv('../input/big-dataset-btp/val_total.csv')
@@ -218,7 +221,7 @@ X_val = pad_sequences(encoded_word_list1, maxlen=maxlen, padding='pre')
 y_val = to_categorical(y_test1, num_classes = 2)
 
 
-#######################################################################################
+#################################### Fitting Model ###################################################
 
 
 seq2seq_Model.compile(loss='binary_crossentropy', optimizer = 'adam', metrics=['accuracy'])
@@ -236,7 +239,7 @@ history = seq2seq_Model.fit(X_train, y_train, validation_data=(X_val, y_val), ep
 
 
 
-###################################### Testing ##########################################
+###################################### Testing Model ##########################################
 
 #Testing
 dataset2 = pd.read_csv('../input/big-dataset-btp/fakenewsnet_test.csv')
@@ -260,6 +263,8 @@ y_test = to_categorical(y_test, num_classes = 2)
 score, acc = seq2seq_Model.evaluate(X_test, y_test, batch_size = batch_size, verbose = 1)
 print("The accuracy of the model on the test set is: ", acc)
 
+
+##################### Confusion Matrix ############################################################
 
 
 #Confusion Matrix
