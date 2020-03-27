@@ -52,10 +52,10 @@ import warnings
 warnings.filterwarnings(action = 'ignore')
 
 
-
+##################### Training & Validation data ############################################################
 
 #Reading the data
-df2 = pd.read_csv('../input/big-dataset-btp/train_total.csv')
+df2 = pd.read_csv('../input/big-dataset-btp/train_val_total.csv')
 X = df2.iloc[:, 1:2].values
 X_train = []
 for i in X:
@@ -196,7 +196,7 @@ model.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accu
 model.summary()
 
 
-########################################################################################
+#################################### Fitting Model ####################################################
 
 
 left_context_as_array = []
@@ -212,13 +212,13 @@ for i in X_train:
 # checkpoint
 from keras.callbacks import ModelCheckpoint
 filepath="best_RCNN_model.hdf5"
-checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
+checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
 
-history = model.fit([np.array(X_train), np.array(left_context_as_array), np.array(right_context_as_array)], y_train, epochs = 10, verbose = 1, batch_size = batch_size, validation_split=0.125,callbacks=callbacks_list)
+history = model.fit([np.array(X_train), np.array(left_context_as_array), np.array(right_context_as_array)], y_train, epochs = 10, verbose = 0, batch_size = batch_size, validation_split=0.125,callbacks=callbacks_list)
 
 
-###################################### Testing ##################################################
+###################################### Testing Model ##################################################
 
 dataset2 = pd.read_csv('../input/big-dataset-btp/webis_test.csv')
 
