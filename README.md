@@ -19,17 +19,16 @@ These datasets are available in the datasets folder. Each dataset was Stratified
 
 About Models :
 
-We applied 5 Deep Learning models and 4 Machine Learning models on the above data. Saved models and their codes are in the models folder. These models are as follows :
+We applied 4 Deep Learning models and 4 Machine Learning models on the above data. Saved models and their codes are in the models folder. These models are as follows :
 
 1) Text CNN
 2) Text RNN
 3) Text RCNN
-4) Hierarchical Attention Network
-5) Seq2Seq Model
-6) Decision Tree
-7) Random Forest
-8) Support Vector Machine
-9) Naive Bayes
+4) Seq2Seq Model
+5) Decision Tree
+6) Random Forest
+7) Support Vector Machine
+8) Naive Bayes
 
 
 
