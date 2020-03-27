@@ -55,6 +55,7 @@ from nltk.corpus import stopwords
 stop = stopwords.words('english')
 
 
+##################### Training data ############################################################
 
 # Get sentences and labels from file
 train_data = pd.read_csv("../input/big-dataset-btp/train_total.csv", error_bad_lines=False)
@@ -73,9 +74,7 @@ texts = []
 for itr in data:
     texts.append(" ".join([word for word in str(itr).split() if word not in stops]))
 
-
-
-
+    
 # Using tokenizer API for tokenization
 tokenizer = Tokenizer(num_words=vocab_size)
 tokenizer.fit_on_texts(texts)
@@ -83,8 +82,6 @@ tokenizer.fit_on_texts(texts)
 #y_labels = np_utils.to_categorical(labels , num_classes=num_of_classes)
 X_train = preprocess(texts)
 y_train = np_utils.to_categorical(labels , num_classes=num_of_classes)
-
-
 
 
 
@@ -96,6 +93,10 @@ print(X_train.shape ,y_train.shape)
 print(X_val.shape ,y_val.shape)
 
 '''
+
+##################### Validation data ############################################################
+
+
 val_data = pd.read_csv("../input/big-dataset-btp/val_total.csv", error_bad_lines=False) 
 
 val_data['text'].replace('', np.nan, inplace=True)
@@ -118,7 +119,7 @@ X_val = preprocess(text)
 y_val = np_utils.to_categorical(v_labels , num_classes=num_of_classes)
 
 
-
+##################### Model ############################################################
 
 """Building the Model"""
 
@@ -143,10 +144,10 @@ def Build_Model(vocab_sizze, dim, dropout, lstm_out):
 model = Build_Model(vocab_size, dim, dropout, lstm_out)
 
 
-
-
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
+
+##################### Fitting Model ############################################################
 
 
 
@@ -161,10 +162,7 @@ history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=10,
 
 
 
-
-
-
-
+##################### Testing Model ############################################################
 
 
 test_data = pd.read_csv("../input/big-dataset-btp/webis_test.csv") 
