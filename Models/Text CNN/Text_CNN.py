@@ -47,19 +47,16 @@ def preprocess(text):
     X = np.array(X)
     return X
 
-
 from nltk.corpus import stopwords
 stop = stopwords.words('english')
 
 
 
+##################### Training data ############################################################
 
 
 # Get sentences and labels from file
-#train_data = pd.read_csv("../input/dataset/data_combined_train.csv")
-#train_data['text'] = train_data['text'].str.replace("[^0-9a-zA-Z]", " ")
 train_data = pd.read_csv("../input/big-dataset-btp/train_total.csv")
-
 train_data['text'].replace('', np.nan, inplace=True)
 train_data.dropna(subset=['text'], inplace=True)
 
@@ -75,8 +72,6 @@ for itr in data:
     texts.append(" ".join([word for word in str(itr).split() if word not in stops]))
 
 
-
-
 # Using tokenizer API for tokenization
 tokenizer = Tokenizer(num_words=vocab_size)
 tokenizer.fit_on_texts(texts)
@@ -87,6 +82,7 @@ y_train = np_utils.to_categorical(labels , num_classes=num_of_classes)
 
 
 
+##################### Validation data ############################################################
 
 
 val_data = pd.read_csv("../input/big-dataset-btp/val_total.csv", error_bad_lines=False) 
@@ -112,7 +108,7 @@ y_val = np_utils.to_categorical(v_labels , num_classes=num_of_classes)
 
 
 
-
+##################### Model ############################################################
 
 num_filters=2
 dropOut=0.50
@@ -127,13 +123,6 @@ def models(kernal_size):
     x = Conv1D(nb_filter = num_filters, kernel_size = kernal_size, border_mode = 'valid', activation = 'relu',strides = 1)(aft_emb)
     x_out = GlobalMaxPooling1D()(x)
     return x_out
-
-
-
-
-
-
-
 
 # Model1 of filters having kernel size as 2
 x_out = models(2)
@@ -162,7 +151,7 @@ merged_model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc
 print(merged_model.summary())
 
 
-
+##################### Fitting Model ############################################################
 
 # checkpoint
 from keras.callbacks import ModelCheckpoint
@@ -174,13 +163,11 @@ history = merged_model.fit(X_train, y_train, validation_data=(X_val, y_val), epo
 
 
 
+##################### Testing Model ############################################################
 
 # Preprocessing Test data
 
 # Checking on liar Dataset 
-
-#test_data = pd.read_csv("../input/btp-dataset/test_kaggle.csv")
-#test_data['text'] = test_data['text'].str.replace("[^0-9a-zA-Z]", " ")
 
 test_data = pd.read_csv("../input/big-dataset-btp/webis_test.csv") 
 
