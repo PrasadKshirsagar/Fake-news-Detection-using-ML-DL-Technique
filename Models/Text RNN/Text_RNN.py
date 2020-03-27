@@ -154,11 +154,11 @@ print(model.summary())
 # checkpoint
 from keras.callbacks import ModelCheckpoint
 filepath="best_RNN_model.hdf5"
-checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
+checkpoint = ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_best_only=True, mode='min')
 callbacks_list = [checkpoint]
 
 # Model fitting
-history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=10, batch_size=128,callbacks=callbacks_list, verbose=1)
+history = model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=10, batch_size=128,callbacks=callbacks_list, verbose=0)
 
 
 
