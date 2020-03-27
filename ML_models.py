@@ -10,18 +10,18 @@ from nltk.corpus import wordnet as wn
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import model_selection, naive_bayes, svm
 from sklearn.metrics import accuracy_score
-
-Corpus = pd.read_csv(r"../input/big-dataset-btp/train_val_total.csv",encoding='latin-1')
-
-
-
 import nltk
+
 
 def custom_tokenize(text):
     if not text:
         print('The text to be tokenized is a None type. Defaulting to blank string.')
         text = ''
     return word_tokenize(text)
+
+
+
+Corpus = pd.read_csv(r"../input/big-dataset-btp/train_val_total.csv",encoding='latin-1')
 
 # Step - a : Remove blank rows if any.
 Corpus['text'].dropna(inplace=True)
@@ -66,11 +66,7 @@ for index,entry in enumerate(Corpus['text']):
 
 
 
-
-
-
-
-
+    
 
 Corpus1 = pd.read_csv(r"../input/big-dataset-btp/liar_test.csv",encoding='latin-1')
 # Step - b : Change all the text to lower case. This is required as python interprets 'dog' and 'DOG' differently
